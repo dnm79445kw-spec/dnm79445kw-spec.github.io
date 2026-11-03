@@ -9,7 +9,15 @@
 <meta property="og:title" content="Rota'da bir paylaşım">
 <meta property="og:description" content="Rehber, liste ya da rota. Rota uygulamasında aç.">
 <meta property="og:type" content="website">
-<meta name="apple-itunes-app" content="app-id=APP_STORE_ID">
+<meta property="og:url" content="https://dnm79445kw-spec.github.io/">
+<meta property="og:image" content="https://dnm79445kw-spec.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://dnm79445kw-spec.github.io/og.png">
+<link rel="apple-touch-icon" href="https://dnm79445kw-spec.github.io/apple-touch-icon.png">
+<link rel="icon" href="https://dnm79445kw-spec.github.io/icon.png">
+<!-- App Store'a çıkınca: <meta name="apple-itunes-app" content="app-id=APP_STORE_ID"> -->
 <style>
   :root { --green:#0F766E; --ink:#17211F; --muted:#4B5563; --bg:#F4F7F6; --card:#fff; }
   @media (prefers-color-scheme: dark) { :root { --green:#14A394; --ink:#F1F5F4; --muted:#A3ADB8; --bg:#0E1312; --card:#18201F; } }
@@ -18,8 +26,7 @@
          font:16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background:var(--bg); color:var(--ink); }
   .card { width:100%; max-width:420px; background:var(--card); border-radius:24px; padding:28px 22px; text-align:center;
           box-shadow:0 10px 30px rgba(0,0,0,.08); }
-  .logo { width:64px; height:64px; border-radius:18px; background:var(--green); color:#fff; display:inline-flex;
-          align-items:center; justify-content:center; font-size:30px; font-weight:800; }
+  .logo { width:72px; height:72px; border-radius:18px; display:inline-block; }
   h1 { font-size:22px; margin:16px 0 6px; }
   p { color:var(--muted); margin:0 0 22px; }
   a.btn { display:block; padding:14px; border-radius:14px; font-weight:700; text-decoration:none; margin-top:10px; }
@@ -29,7 +36,7 @@
 </head>
 <body>
 <main class="card">
-  <div class="logo">R</div>
+  <img class="logo" src="https://dnm79445kw-spec.github.io/icon.png" alt="Rota">
   <h1 id="title">Rota'da bir paylaşım</h1>
   <p id="text">Bu rehber, liste ya da rota Rota uygulamasında açılır.</p>
   <a class="btn primary" id="download" href="#">Rota'yı indir</a>
@@ -40,16 +47,18 @@
   var STORE_URL = "https://testflight.apple.com/join/TESTFLIGHT_CODE";
 
   var en = !(navigator.language || "tr").toLowerCase().startsWith("tr");
+  // Links look like /p/?id=<id> (also /p/<id> from older versions).
   var parts = location.pathname.split("/").filter(Boolean);
   var i = parts.findIndex(function (p) { return p === "p" || p === "u"; });
-  var kind = i >= 0 ? parts[i] : null, id = i >= 0 ? parts[i + 1] : null;
+  var kind = i >= 0 ? parts[i] : null;
+  var id = new URLSearchParams(location.search).get("id") || (i >= 0 ? parts[i + 1] : null);
 
   document.getElementById("download").href = STORE_URL;
   if (id) document.getElementById("open").href = "rota://" + (kind === "u" ? "user/" : "post/") + id;
   if (kind === "u") {
     document.getElementById("title").textContent = en ? "A traveller on Rota" : "Rota'da bir gezgin";
     document.getElementById("text").textContent = en ? "This profile opens in the Rota app." : "Bu profil Rota uygulamasında açılır.";
-  } else if (en) {
+  } else if (en && kind) {
     document.getElementById("title").textContent = "Shared on Rota";
     document.getElementById("text").textContent = "This guide, list or route opens in the Rota app.";
   }
