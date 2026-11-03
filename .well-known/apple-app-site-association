@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["39GB8FFNPK.berso.rota.ios"],
+        "components": [
+          { "/": "/p/*" },
+          { "/": "/u/*" }
+        ]
+      }
+    ]
+  }
+}
